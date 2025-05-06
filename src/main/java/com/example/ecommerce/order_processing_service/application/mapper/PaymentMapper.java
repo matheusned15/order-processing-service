@@ -18,7 +18,7 @@ public class PaymentMapper {
         Payment payment = new Payment();
         payment.setId(UUID.randomUUID().toString());
         payment.setOrderId(dto.getOrderId());
-        payment.setAmount(dto.getAmount());
+        payment.setAmount(BigDecimal.valueOf(dto.getAmount()));
         payment.setMethod(PaymentMethod.valueOf(dto.getPaymentMethod()));
         payment.setStatus(PaymentStatus.PENDING);
         payment.setPaidAt(LocalDateTime.now());
@@ -29,7 +29,7 @@ public class PaymentMapper {
         PaymentResponseDTO dto = new PaymentResponseDTO();
         dto.setPaymentId(payment.getId());
         dto.setOrderId(payment.getOrderId());
-        dto.setAmount(BigDecimal.valueOf(payment.getAmount()));
+        dto.setAmount(payment.getAmount());
         dto.setMethod(payment.getMethod().name());
         dto.setStatus(payment.getStatus().name());
         dto.setPaidAt(payment.getPaidAt());
