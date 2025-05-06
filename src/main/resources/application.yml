@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────────────────
+# src/main/resources/application.yml
+# ─────────────────────────────────────────────────────
+
+# -----------------------------------------------------
+# Configurações do Kafka para o seu KafkaConfig.java
+# -----------------------------------------------------
+kafka:
+  bootstrap-servers: localhost:9092
+
+# -----------------------------------------------------
+# Spring Boot standard config (datasource, JPA, security)
+# -----------------------------------------------------
+spring:
+  application:
+    name: order-processing-service
+
+  datasource:
+    url: jdbc:h2:mem:orderdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/fake/.well-known/jwks.json
+
+  # (mantém também para a auto-configuração do Spring Kafka se quiser)
+  kafka:
+    bootstrap-servers: localhost:9092
+    admin:
+      auto-create: false
+    consumer:
+      bootstrap-servers: localhost:9092
+    producer:
+      bootstrap-servers: localhost:9092
+
+# -----------------------------------------------------
+# AWS S3
+# -----------------------------------------------------
+aws:
+  region: us-east-1
+  s3:
+    bucket-name: seu-bucket-de-invoices
+
+# -----------------------------------------------------
+# Desabilita health check do Kafka no Actuator
+# -----------------------------------------------------
+management:
+  health:
+    kafka:
+      enabled: false
