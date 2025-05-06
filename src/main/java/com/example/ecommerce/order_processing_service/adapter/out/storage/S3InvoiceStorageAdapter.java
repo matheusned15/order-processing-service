@@ -16,9 +16,6 @@ public class S3InvoiceStorageAdapter {
     @Value("${aws.s3.bucket-name}")
     private String bucketName;
 
-    /**
-     * Faz upload de um PDF para o S3 e retorna a chave (path) gerada.
-     */
     public String uploadInvoice(String orderId, byte[] pdfBytes) {
         String key = "invoices/" + orderId + ".pdf";
         PutObjectRequest req = PutObjectRequest.builder()
