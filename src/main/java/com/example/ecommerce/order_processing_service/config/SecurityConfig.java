@@ -1,4 +1,4 @@
-package com.example.ecommerce.config;
+package com.example.ecommerce.order_processing_service.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,12 +15,24 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http,
+                                                         ReactiveJwtAuthenticationConverterAdapter jwtConverter) {
         http
-                .csrf().disable()
+                .csrf(csrf -> csrf.disable())
                 .authorizeExchange(exchanges -> exchanges
-                        .anyExchange().permitAll()
+                        .pathMatchers("/actuator/**").permitAll()
+                        .anyExchange().authenticated()
+                )
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter))
                 );
         return http.build();
+    }
+
+    @Bean
+    public ReactiveJwtAuthenticationConverterAdapter jwtConverterAdapter() {
+        JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
+        // configure jwtConverter if needed (roles mapping, etc)
+        return new ReactiveJwtAuthenticationConverterAdapter(jwtConverter);
     }
 }
