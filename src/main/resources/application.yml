@@ -48,7 +48,7 @@ spring:
 aws:
   region: us-east-1
   s3:
-    bucket-name: seu-bucket-de-invoices
+    bucket-name: order-processing-service-invoices
 
 # -----------------------------------------------------
 # Desabilita health check do Kafka no Actuator
