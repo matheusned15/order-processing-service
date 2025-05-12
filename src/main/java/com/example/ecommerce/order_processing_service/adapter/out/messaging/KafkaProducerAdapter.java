@@ -14,7 +14,7 @@ public class KafkaProducerAdapter {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void publishOrderCreated(OrderCreatedEvent event) {
-        kafkaTemplate.send("orders.created", event.getOrderId().toString(), event);
+    kafkaTemplate.send("orders.created", event.getOrderId().toString(), event);
     }
 
     public void publishPaymentCompleted(PaymentCompletedEvent event) {

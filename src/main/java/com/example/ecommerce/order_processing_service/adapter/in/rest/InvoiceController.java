@@ -11,11 +11,17 @@ import java.time.Duration;
 
 @RestController
 @RequestMapping("/orders/{orderId}/invoice")
-@RequiredArgsConstructor
 public class InvoiceController {
 
     private final IInvoiceService invoiceService;
     private final S3InvoiceStorageAdapter storageAdapter;
+
+    // Construtor explícito, para não depender de Lombok aqui
+    public InvoiceController(IInvoiceService invoiceService,
+                             S3InvoiceStorageAdapter storageAdapter) {
+        this.invoiceService = invoiceService;
+        this.storageAdapter = storageAdapter;
+    }
 
     @GetMapping
     public Mono<InvoiceResponseDTO> getInvoice(@PathVariable String orderId) {

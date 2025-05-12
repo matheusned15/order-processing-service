@@ -10,4 +10,8 @@ public class InvoiceResponseDTO {
     private String invoiceNumber;
     private String s3Key;
     private Instant issuedAt;
+
+    public String getS3Key() {
+        return s3Key;
+    }
 }

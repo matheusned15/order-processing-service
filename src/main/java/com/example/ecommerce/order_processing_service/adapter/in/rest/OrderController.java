@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/orders")
-@RequiredArgsConstructor           // gera um construtor com orderService como parâmetro
+@RequestMapping("/orders") // gera um construtor com orderService como parâmetro
 public class OrderController {
 
     private final IOrderService orderService;  // sem @Autowired
+
+    public OrderController(IOrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

@@ -17,7 +17,7 @@ import java.util.UUID;
 @Table(name = "invoices")
 public class Invoice {
     @Id
-    private UUID id;
+    private String id;
     private UUID orderId;
     private String invoiceNumber;
     private String s3Key;

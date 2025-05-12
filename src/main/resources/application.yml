@@ -2,15 +2,10 @@
 # src/main/resources/application.yml
 # ─────────────────────────────────────────────────────
 
-# -----------------------------------------------------
-# Configurações do Kafka para o seu KafkaConfig.java
-# -----------------------------------------------------
+# ── alias para KafkaConfig antigo ───────────────────
 kafka:
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: ${spring.kafka.bootstrap-servers}
 
-# -----------------------------------------------------
-# Spring Boot standard config (datasource, JPA, security)
-# -----------------------------------------------------
 spring:
   application:
     name: order-processing-service
@@ -32,27 +27,29 @@ spring:
         jwt:
           jwk-set-uri: http://localhost:8080/realms/fake/.well-known/jwks.json
 
-  # (mantém também para a auto-configuração do Spring Kafka se quiser)
   kafka:
     bootstrap-servers: localhost:9092
     admin:
       auto-create: false
     consumer:
-      bootstrap-servers: localhost:9092
+      group-id: invoice-service
+      auto-offset-reset: earliest
     producer:
       bootstrap-servers: localhost:9092
+    listener:
+      missing-topics-fatal: false
+      retry:
+        max-attempts: 3
+        backoff:
+          initial-interval: 5000
+          multiplier: 2
+          max-interval: 30000
 
-# -----------------------------------------------------
-# AWS S3
-# -----------------------------------------------------
 aws:
   region: us-east-1
   s3:
     bucket-name: order-processing-service-invoices
 
-# -----------------------------------------------------
-# Desabilita health check do Kafka no Actuator
-# -----------------------------------------------------
 management:
   health:
     kafka:

@@ -15,7 +15,7 @@ public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
 
     public Invoice create(Invoice invoice) {
-        invoice.setId(UUID.fromString(UUID.randomUUID().toString()));
+        invoice.setId(invoice.getId());
         return invoiceRepository.save(invoice);
     }
 }

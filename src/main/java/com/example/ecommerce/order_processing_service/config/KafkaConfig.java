@@ -25,6 +25,7 @@ public class KafkaConfig {
     @Value("${kafka.bootstrap-servers}")
     private String bootstrapServers;
 
+
     // Producer configuration
     @Bean
     public Map<String, Object> producerConfigs() {

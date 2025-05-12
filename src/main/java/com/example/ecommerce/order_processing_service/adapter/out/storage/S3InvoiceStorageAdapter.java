@@ -15,7 +15,6 @@ import java.net.URL;
 import java.time.Duration;
 
 @Component
-@RequiredArgsConstructor
 public class S3InvoiceStorageAdapter {
 
     private final S3Client s3Client;
@@ -23,6 +22,11 @@ public class S3InvoiceStorageAdapter {
 
     @Value("${aws.s3.bucket-name}")
     private String bucketName;
+
+    public S3InvoiceStorageAdapter(S3Client s3Client, S3Presigner s3Presigner) {
+        this.s3Client = s3Client;
+        this.s3Presigner = s3Presigner;
+    }
 
     public String uploadInvoice(String orderId, byte[] pdfBytes) {
         String key = "invoices/" + orderId + ".pdf";
